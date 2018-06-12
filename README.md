@@ -10,6 +10,8 @@ development methods.
 
 [Latency Reference](https://github.com/Open-Markets-Initiative/latency-reference "Latency reference articles and links")
 
+[Lua Wireshark](https://github.com/Open-Markets-Initiative/wireshark-lua "Source generated lua Wireshark dissectors")
+
 
 ## Disclaimer
 

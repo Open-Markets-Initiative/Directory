@@ -1,14 +1,7 @@
 ## Omi Protocol Reference
 
-A repository of protocol specifications
+Repository of protocol specifications
 
-## Disclaimer
-
-The Open Markets Initiative (Omi) is a group of technologists dedicated to 
-enhancing the stability of electronic financial markets using modern 
-development methods.
+Specifications are stored here for historical purposes as the original links change as exchanges/organizations update their websites.
 
 If any information is in violation of copyright please let us know and we will remove it.
-
-
-Enjoy.
