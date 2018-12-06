@@ -6,7 +6,7 @@ The Open Markets Initiative (Omi) is a group of technologists dedicated to enhan
 
 All github code is available for any use with the least restrictive licensing possible.  For instance, wireshark dissectors follow wireshark gpl v3.  
 
-Machine generated sources should be treated as if you wrote the code yourself.  With no implied warranty.
+Machine generated sources should be treated as if you wrote the code yourself.  This is free software. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-Patented Generation technolgies remain with Omi.
+Patented protocol code generation technolgies remain with Omi.
 Enjoy.
