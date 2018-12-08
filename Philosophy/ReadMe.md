@@ -1,8 +1,6 @@
-## OMI License
+## OMI Philosophy
 
 The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-## Philosophy
 
 Sources should use best practices including automation and minimization of dependencies.
 
