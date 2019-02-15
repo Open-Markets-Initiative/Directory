@@ -1,6 +1,6 @@
 ## OMI Latency Related Projects Directory
 
-[Latency Lab](https://github.com/Open-Markets-Initiative/latency-lab "Composable tools for latency Measurement") "Composable tools for latency Measurement"
+[Latency Lab](https://github.com/Open-Markets-Initiative/latency-lab "Composable tools for latency Measurement") Composable tools for latency Measurement
 
 [Latency Reference](https://github.com/Open-Markets-Initiative/latency-reference "Latency reference articles and links") Reference documents for low latency programming 
 
