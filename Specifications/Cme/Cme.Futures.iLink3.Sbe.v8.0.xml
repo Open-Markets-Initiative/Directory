@@ -1,7 +1,7 @@
-ï»¿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:messageSchema xmlns:ns2="http://www.fixprotocol.org/ns/simple/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" package="iLinkBinary" id="8" version="0" semanticVersion="FIX5.0" description="20190724" byteOrder="littleEndian" xsi:schemaLocation="http://www.fixtradingcommunity.org/pg/file/fplpo/read/1196759/simple-binary-encoding-rc2xsd SimpleBinary-RC2.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:messageSchema xmlns:ns2="http://www.fixprotocol.org/ns/simple/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" package="iLinkBinary" id="8" version="2" semanticVersion="FIX5.0" description="20191105" byteOrder="littleEndian" xsi:schemaLocation="http://www.fixtradingcommunity.org/pg/file/fplpo/read/1196759/simple-binary-encoding-rc2xsd SimpleBinary-RC2.xsd">
     <types>
-        <type name="CHAR" description="char" primitiveType="char" sinceVersion="5"/>
+        <type name="CHAR" description="char" primitiveType="char"/>
         <type name="ClientFlowType" description="ClientFlowType" presence="constant" length="10" primitiveType="char" semanticType="String">IDEMPOTENT</type>
         <type name="CrossOrderType" description="Cross order type supports only limit order" presence="constant" length="1" primitiveType="char" semanticType="char">2</type>
         <type name="CrossPrioritization" description="Cross Prioritization" presence="constant" length="1" primitiveType="char" semanticType="char">0</type>
@@ -34,8 +34,6 @@
         <type name="SecurityIDSource" description="SecurityIDSource" presence="constant" length="1" primitiveType="char" semanticType="char">8</type>
         <type name="SecurityReqType" description="Security request type for UDS creation" presence="constant" length="1" primitiveType="char" semanticType="char">1</type>
         <type name="String10Req" description="String with length of 10 required" length="10" primitiveType="char" semanticType="String"/>
-        <type name="String12" description="String with length 12" presence="optional" length="12" primitiveType="char" semanticType="String"/>
-        <type name="String12Req" description="String with length 12 required" length="12" primitiveType="char" semanticType="String"/>
         <type name="String17" description="Optional string with length of 17" presence="optional" length="17" primitiveType="char" semanticType="String"/>
         <type name="String2" description="StringLength2" length="2" primitiveType="char" semanticType="String"/>
         <type name="String20" description="String Length 20" presence="optional" length="20" primitiveType="char" semanticType="String"/>
@@ -50,6 +48,7 @@
         <type name="String5" description="Optional string with length of 5" presence="optional" length="5" primitiveType="char" semanticType="String"/>
         <type name="String5Req" description="String with length of 5 required" length="5" primitiveType="char" semanticType="String"/>
         <type name="String75" description="String with length of 75" presence="optional" length="75" primitiveType="char" semanticType="String"/>
+        <type name="String8" description="String field length 8" presence="optional" length="8" primitiveType="char" semanticType="String"/>
         <type name="String8Req" description="String with length of 8 required" length="8" primitiveType="char" semanticType="String"/>
         <type name="StringLength35" description="String with length of 35" presence="optional" length="35" primitiveType="char" semanticType="String"/>
         <type name="StringLength6" description="StringLength6" presence="optional" length="6" primitiveType="char" semanticType="String"/>
@@ -61,7 +60,7 @@
         <type name="uInt32" description="uInt32" primitiveType="uint32" semanticType="int"/>
         <type name="uInt32NULL" description="uInt32NULL" presence="optional" nullValue="4294967295" primitiveType="uint32" semanticType="int"/>
         <type name="uInt64" description="uInt64" primitiveType="uint64" semanticType="int"/>
-        <type name="uInt64NULL" description="uInt64NULL" primitiveType="uint64" semanticType="int"/>
+        <type name="uInt64NULL" description="uInt64NULL" presence="optional" nullValue="18446744073709551615" primitiveType="uint64" semanticType="int"/>
         <type name="uInt8" description="uInt8" primitiveType="uint8"/>
         <type name="uInt8NULL" description="uInt8NULL" presence="optional" nullValue="255" primitiveType="uint8"/>
         <composite name="DATA" description="DATA Field" semanticType="data">
@@ -74,7 +73,7 @@
         </composite>
         <composite name="Decimal64NULL" description="Optional floating point decimal">
             <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
-            <type name="exponent" description="exponent" primitiveType="int8"/>
+            <type name="exponent" description="exponent" presence="optional" nullValue="127" primitiveType="int8"/>
         </composite>
         <composite name="MaturityMonthYear" description="Year, Month and Date" semanticType="MonthYear">
             <type name="year" description="YYYY" presence="optional" nullValue="65535" primitiveType="uint16"/>
@@ -138,6 +137,20 @@
             <validValue name="Clearingfirmtradingforitsproprietaryaccount" description="Clearing firm trading for its proprietary account">2</validValue>
             <validValue name="Membertradingforanothermember" description="Member trading for anothermember">3</validValue>
             <validValue name="Allother" description="All other">4</validValue>
+        </enum>
+        <enum name="DKReason" encodingType="charNULL">
+            <validValue name="UnknownSecurity" description="Unknown Security">A</validValue>
+            <validValue name="WrongSide" description="Wrong Side">B</validValue>
+            <validValue name="QuantityExceedsOrder" description="Quantity Exceeds Order">C</validValue>
+            <validValue name="NoMatchingOrder" description="No Matching Order">D</validValue>
+            <validValue name="PriceExceedsLimit" description="Price Exceeds Limit">E</validValue>
+            <validValue name="CalculationDifference" description="Calculation Difference">F</validValue>
+            <validValue name="NoMatchingExecutionReport" description="No Matching Execution Report">G</validValue>
+            <validValue name="Other" description="Other">Z</validValue>
+        </enum>
+        <enum name="ExecAckStatus" encodingType="uInt8">
+            <validValue name="Accepted" description="Accepted">1</validValue>
+            <validValue name="Rejected" description="Rejected">2</validValue>
         </enum>
         <enum name="ExecMode" encodingType="charNULL">
             <validValue name="Aggressive" description="Aggressive">A</validValue>
@@ -219,11 +232,6 @@
             <validValue name="Day" description="Day">0</validValue>
             <validValue name="GTC" description="GTC">1</validValue>
             <validValue name="GTD" description="GTD">6</validValue>
-        </enum>
-        <enum name="MoneyOrPar" encodingType="uInt8NULL">
-            <validValue name="NotAvailable" description="Not Available">0</validValue>
-            <validValue name="Money" description="Money Filled">1</validValue>
-            <validValue name="Par" description="Par Filled">2</validValue>
         </enum>
         <enum name="OFMOverrideReq" encodingType="uInt8">
             <validValue name="Disabled" description="Disabled">0</validValue>
@@ -314,10 +322,6 @@
             <validValue name="AcceptSecurityProposalasis" description="Accept Security Proposal as is">1</validValue>
             <validValue name="AcceptSecurityproposalwithrevisionsasindicatedinthemessage" description="Accept Security proposal with revisions as indicated in the message">2</validValue>
             <validValue name="RejectSecurityProposal" description="Reject Security Proposal">5</validValue>
-        </enum>
-        <enum name="SecurityAltIDSource" encodingType="uInt8NULL">
-            <validValue name="CUSIP" description="CUSIP (9 char)">1</validValue>
-            <validValue name="ISIN" description="ISIN (12 char)">4</validValue>
         </enum>
         <enum name="ShortSaleType" encodingType="enumNULL">
             <validValue name="LongSell" description="Long Sell">0</validValue>
@@ -564,11 +568,11 @@
         </group>
     </ns2:message>
     <ns2:message name="PartyDetailsDefinitionRequest518" id="518" description="PartyDetailsDefinitionRequest" blockLength="147" semanticType="CX">
-        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="The unique identifier of the PartyDetailsDefinitionRequest(35=CX) message. For use with short messages and registering party details through iLink this ID should be unique. For use with long messages this ID should be set to 0" offset="0" semanticType="int"/>
+        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="The unique identifier of the PartyDetailsDefinitionRequest(35=CX) message. For use with short messages and registering party details through iLink this ID should be unique. For use with long messages this ID should be set to FFFFFFFF" offset="0" semanticType="int"/>
         <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="8" semanticType="int"/>
-        <field name="ListUpdateAction" id="1324" type="ListUpdAct" description="Indicates if all of the information sent in this message with a unique new PartyDetailsListRequestID is a new addition or deletion of existing information associated with an existing PartyDetailsListRequestID. For PartyDetailsListRequestID=0 this should always be set to &quot;A&quot;" offset="16" semanticType="char"/>
+        <field name="ListUpdateAction" id="1324" type="ListUpdAct" description="Indicates if all of the information sent in this message with a unique new PartyDetailsListRequestID is a new addition or deletion of existing information associated with an existing PartyDetailsListRequestID. For PartyDetailsListRequestID=FFFFFFFF this should always be set to &quot;A&quot;" offset="16" semanticType="char"/>
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="17" semanticType="int"/>
-        <field name="Memo" id="5149" type="String75" description="This general purpose text field could be mapped from iLink to Clearing STP for trades." offset="21" semanticType="String"/>
+        <field name="Memo" id="5149" type="String75" description="This general purpose text field could be mapped from iLink to Clearing STP for trades. Not available for use with the short format where PartyDetailsListRequestID not equal to FFFFFFFF. Available for use only with the long format where PartyDetailsListRequestID=FFFFFFFF" offset="21" semanticType="String"/>
         <field name="AvgPxGroupID" id="1731" type="String20" description="Used by submitting firm to group trades being allocated into an average price group. The trades in average price group will be used to calculate an average price for the group" offset="96" semanticType="String"/>
         <field name="SelfMatchPreventionID" id="2362" type="uInt64NULL" description="Identifies an order or trade that should not be matched to an opposite order or trade if both buy and sell orders for the same asset contain the same SelfMatchPreventionID (2362) and submitted by the same firm" offset="116" semanticType="int"/>
         <field name="CmtaGiveupCD" id="9708" type="CmtaGiveUpCD" description="Indicates if the order is a give-up or SGX offset. Reject if greater than max length or not containing valid value. " offset="124" semanticType="char"/>
@@ -586,13 +590,17 @@
             <field name="PartyDetailIDSource" id="1692" type="PartyIDSource" description="Used to identify source of PartyDetailID value. Required when NoPartyDetails(1671) greater than 0. Constant value of C" semanticType="char"/>
             <field name="PartyDetailRole" id="1693" type="PartyDetailRole" description="Identifies the type of PartyDetailID. Required when NoPartyDetails(1671) &gt; 0" offset="20" semanticType="int"/>
         </group>
+        <group name="NoTrdRegPublications" id="2668" description="Number of regulatory publication rules in repeating group. Should always be &quot;1&quot; if being used otherwise set to 0" blockLength="2" sinceVersion="2" dimensionType="groupSize">
+            <field name="TrdRegPublicationType" id="2669" type="uInt8" description="Specifies the type of regulatory trade publication. Additional reasons for the publication type will be specified in TrdRegPublicationReason (2670). 2=Exempt from Publication. There are allowable exemptions for the post-trade publication of trade transactions" offset="0" semanticType="int"/>
+            <field name="TrdRegPublicationReason" id="2670" type="uInt8" description="Additional reason for trade publication type specified in TrdRegPublicationType (2669). Reasons may be specific to regulatory trade publication rules. 12=Exempted due to European System of Central Banks (ESCB) policy transaction" offset="1" semanticType="int"/>
+        </group>
     </ns2:message>
     <ns2:message name="PartyDetailsDefinitionRequestAck519" id="519" description="PartyDetailsDefinitionRequestAck" blockLength="159" semanticType="CY">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
-        <field name="Memo" id="5149" type="String75" description="This general purpose text field could be mapped from iLink to Clearing STP for trades." offset="12" semanticType="String"/>
+        <field name="Memo" id="5149" type="String75" description="This general purpose text field could be mapped from iLink to Clearing STP for trades. Not available for use with the short format where PartyDetailsListRequestID?FFFFFFFF. Available for use only with the long format where PartyDetailsListRequestID=FFFFFFFF" offset="12" semanticType="String"/>
         <field name="AvgPxGroupID" id="1731" type="String20" description="Used by submitting firm to group trades being allocated into an average price group. The trades in average price group will be used to calculate an average price for the group" offset="87" semanticType="String"/>
-        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="The unique identifier of the PartyDetailsDefinitionRequest(35=CX) message. For use with short messages and registering party details through iLink this ID should be unique. For use with long messages this ID should be set to 0" offset="107" semanticType="int"/>
+        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="The unique identifier of the PartyDetailsDefinitionRequest(35=CX) message. For use with short messages and registering party details through iLink this ID should be unique. For use with long messages this ID should be set to FFFFFFFF" offset="107" semanticType="int"/>
         <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="115" semanticType="int"/>
         <field name="SelfMatchPreventionID" id="2362" type="uInt64NULL" description="Used by the Falcon engine to prevent orders from the same firm matching with each other. Each message sent with this tag and the same matching value will be eligible for Self-Match Prevention." offset="123" semanticType="int"/>
         <field name="PartyDetailRequestStatus" id="1878" type="uInt8" description="Status of party details definition request" offset="131" semanticType="int"/>
@@ -600,11 +608,11 @@
         <field name="ClearingAccountType" id="1816" type="ClearingAcctType" description="Designates the account type to be used for the order when submitted to clearing" offset="133" semanticType="int"/>
         <field name="SelfMatchPreventionInstruction" id="8000" type="SMPI" description="Used to act upon the outcome when a self-match is detected and an order is prevented from trading against another order with the same SelfMatchPreventionID (Tag 2362). N=Cancel newest signifies that incoming order is cancelled. O=Cancel Oldest signifies that the resting order is cancelled. Absence of this field (with Tag 2362) is interpreted as cancel oldest" offset="134" semanticType="char"/>
         <field name="AvgPxIndicator" id="819" type="AvgPxInd" description="Indicates if the resulting trade is to be average priced or not. Is also used to indicate type of average price grouping" offset="135" semanticType="int"/>
-        <field name="ClearingTradePriceType" id="1598" type="SLEDS" description="Indicates whether spread differential trade is clearing at execution price (LastPx ?? Tag 31) or alternate clearing price (prior day settle price)" offset="136" semanticType="int"/>
+        <field name="ClearingTradePriceType" id="1598" type="SLEDS" description="Indicates whether spread differential trade is clearing at execution price (LastPx ¿ Tag 31) or alternate clearing price (prior day settle price)" offset="136" semanticType="int"/>
         <field name="CmtaGiveupCD" id="9708" type="CmtaGiveUpCD" description="Indicates if the order is a give-up or SGX offset" offset="137" semanticType="char"/>
         <field name="CustOrderHandlingInst" id="1031" type="CustOrdHandlInst" description="Codes that apply special information that the Broker / Dealer needs to report, as specified by the customer. Defines source of the order " offset="138" semanticType="char"/>
         <field name="NoPartyUpdates" id="1676" type="NoPtyUpd" description="Number of party updates. Constant value of 1" semanticType="int"/>
-        <field name="ListUpdateAction" id="1324" type="ListUpdAct" description="Indicates if all of the information sent in this message with a unique new PartyDetailsListRequestID is a new addition or deletion of existing information (TBD) associated with an existing PartyDetailsListRequestID. For PartyDetailsListRequestID=0 this should always be set to &quot;A&quot;" offset="139" semanticType="char"/>
+        <field name="ListUpdateAction" id="1324" type="ListUpdAct" description="Indicates if all of the information sent in this message with a unique new PartyDetailsListRequestID is a new addition or deletion of existing information (TBD) associated with an existing PartyDetailsListRequestID. For PartyDetailsListRequestID=FFFFFFFF this should always be set to &quot;A&quot;" offset="139" semanticType="char"/>
         <field name="PartyDetailDefinitionStatus" id="1879" type="uInt8" description="Status of party detail definition for one party" offset="140" semanticType="int"/>
         <field name="Executor" id="5290" type="uInt64NULL" description="Will be populated with a short code for the person or algo identified in FIX tag 5392 which will be mapped to National ID or Algo at reporting time" offset="141" semanticType="int"/>
         <field name="IDMShortCode" id="36023" type="uInt64NULL" description="Represents the Investment Decision Maker Short Code" offset="149" semanticType="int"/>
@@ -614,6 +622,10 @@
             <field name="PartyDetailID" id="1691" type="String20Req" description="The identification of the party. Required when NoPartyDetails(1671) &gt; 0" offset="0" semanticType="String"/>
             <field name="PartyDetailIDSource" id="1692" type="PartyIDSource" description="Used to identify source of PartyDetailID value. Required when NoPartyDetails(1671) &gt; 0. Constant value of &quot;C&quot;." semanticType="char"/>
             <field name="PartyDetailRole" id="1693" type="PartyDetailRole" description="Identifies the type of PartyDetailID. Required when NoPartyDetails(1671) &gt; 0" offset="20" semanticType="int"/>
+        </group>
+        <group name="NoTrdRegPublications" id="2668" description="Number of regulatory publication rules in repeating group. Should always be &quot;1&quot; if being used otherwise set to 0" blockLength="2" sinceVersion="2" dimensionType="groupSize">
+            <field name="TrdRegPublicationType" id="2669" type="uInt8" description="Specifies the type of regulatory trade publication. Additional reasons for the publication type will be specified in TrdRegPublicationReason (2670). 2=Exempt from Publication. There are allowable exemptions for the post-trade publication of trade transactions" offset="0" semanticType="int"/>
+            <field name="TrdRegPublicationReason" id="2670" type="uInt8" description="Additional reason for trade publication type specified in TrdRegPublicationType (2669). Reasons may be specific to regulatory trade publication rules. 12=Exempted due to European System of Central Banks (ESCB) policy transaction" offset="1" semanticType="int"/>
         </group>
     </ns2:message>
     <ns2:message name="BusinessReject521" id="521" description="BusinessReject" blockLength="330" semanticType="j">
@@ -636,7 +648,7 @@
     <ns2:message name="ExecutionReportNew522" id="522" description="ExecutionReportNew" blockLength="201" semanticType="8">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number of this message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
-        <field name="ExecID" id="17" type="String40" description="Unique identifier of execution message as assigned by the exchange ?? unique per day across all instruments and across all good till orders." offset="12" semanticType="String"/>
+        <field name="ExecID" id="17" type="String40" description="Unique identifier of execution message as assigned by the exchange ¿ unique per day across all instruments and across all good till orders." offset="12" semanticType="String"/>
         <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="52" semanticType="String"/>
         <field name="ClOrdID" id="11" type="String20Req" description="Unique identifier for Order as assigned by the buy-side (institution, broker, intermediary etc.). Uniqueness must be guaranteed within a single trading day. Firms, particularly those which electronically submit multi-day orders, trade globally or throughout market close periods, should ensure uniqueness across days, for example by embedding a date within the ClOrdID field" offset="72" semanticType="String"/>
         <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="The unique identifier of the PartyDetailsDefinitionRequestAck attached to this message; pancake flip of what was submitted on inbound message" offset="92" semanticType="int"/>
@@ -918,7 +930,7 @@
         <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="21" semanticType="String"/>
         <field name="Location" id="9537" type="String5Req" description="Text describing sender's location (i.e. geopraphic location and/or desk)" offset="41" semanticType="String"/>
         <field name="QuoteID" id="117" type="uInt32" description="Identifier of the Quote Cancel message. Should be unique per trading session. Uniqueness will not be enforced by CME and is incumbent on the market participant to maintain uniqueness" offset="46" semanticType="int"/>
-        <field name="QuoteCancelType" id="298" type="QuoteCxlTyp" description="Identifies the type of Quote Cancel. A working quote can be cancelled by providing either it??s instrument, instrument group or by cancelling all." offset="50" semanticType="int"/>
+        <field name="QuoteCancelType" id="298" type="QuoteCxlTyp" description="Identifies the type of Quote Cancel. A working quote can be cancelled by providing either it¿s instrument, instrument group or by cancelling all." offset="50" semanticType="int"/>
         <field name="LiquidityFlag" id="9373" type="BooleanNULL" description="New field added to capture if an order was submitted for market making obligation or not. Applicable only for EU fixed income markets" offset="51" semanticType="int"/>
         <group name="NoQuoteEntries" id="295" description="The number of quote entries for quote sets, instruments, product group, cancel all; 298=1 (1 to 100); 298=3 (1); 298=4 (1); 298=100 (1 to 15)" blockLength="10" dimensionType="groupSize">
             <field name="SecurityGroup" id="1151" type="StringLength6" description="A specific moniker assigned to a group of related securities which may be concurrently affected by market events and actions. Has to be first field in the repeating group. Should contain [N/A] for cancel all. All quote sets and individual instruments have to belong to a specific product group and the first one determines the group to be followed for the rest of the repeating group entries and if there is a mismatch then it will be rejected " offset="0" semanticType="String"/>
@@ -1149,7 +1161,7 @@
         <group name="NoPartyIDs" id="453" description="Number of PartyID (448), PartyIDSource (447), and PartyRole (452) entries. Applicable only if specific PartyDetailsDefinitions are being requested otherwise set to 0" blockLength="11" dimensionType="groupSize">
             <field name="PartyID" id="448" type="uInt64" description="Required if NoPartyIDs(453) &gt; 0. Identification of the PartyDetailsListRequestID of PartyDetailsDefinitionRequestAck" offset="0" semanticType="int"/>
             <field name="PartyIDSource" id="447" type="CHAR" description="Required if NoPartyIDs(453) &gt; 0. Used to identify classification source. Constant value" offset="8" semanticType="char"/>
-            <field name="PartyRole" id="452" type="uInt16" description="Required if NoPartyIDs(453) &gt; 0. Identifies the type of PartyID(448). Constant value" offset="9" semanticType="int"/>
+            <field name="PartyRole" id="452" type="uInt16" description="Required if NoPartyIDs(453) &gt; 0. Identifies the type of PartyID(448)" offset="9" semanticType="int"/>
         </group>
     </ns2:message>
     <ns2:message name="PartyDetailsListReport538" id="538" description="PartyDetailsListReport" blockLength="93" semanticType="CG">
@@ -1179,77 +1191,23 @@
             <field name="PartyDetailIDSource" id="1692" type="PartyIDSource" description="Used to identify source of PartyDetailID value. Required when NoPartyDetails(1671) &gt; 0. Constant value of &quot;C&quot;" semanticType="char"/>
             <field name="PartyDetailRole" id="1693" type="PartyDetailRole" description="Identifies the type of PartyDetailID. Required when NoPartyDetails(1671) &gt; 0" offset="20" semanticType="int"/>
         </group>
+        <group name="NoTrdRegPublications" id="2668" description="Number of regulatory publication rules in repeating group. Should always be &quot;1&quot; if being used otherwise set to 0" blockLength="2" sinceVersion="2" dimensionType="groupSize">
+            <field name="TrdRegPublicationType" id="2669" type="uInt8" description="Specifies the type of regulatory trade publication. Additional reasons for the publication type will be specified in TrdRegPublicationReason (2670). 2=Exempt from Publication. There are allowable exemptions for the post-trade publication of trade transactions" offset="0" semanticType="int"/>
+            <field name="TrdRegPublicationReason" id="2670" type="uInt8" description="Additional reason for trade publication type specified in TrdRegPublicationType (2669). Reasons may be specific to regulatory trade publication rules. 12=Exempted due to European System of Central Banks (ESCB) policy transaction" offset="1" semanticType="int"/>
+        </group>
     </ns2:message>
-    <ns2:message name="SecurityDefinitionRequest541" id="541" description="SecurityDefinitionRequest" blockLength="70" semanticType="c">
+    <ns2:message name="ExecutionAck539" id="539" description="ExecutionAck" blockLength="67" semanticType="BN">
         <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="Refers to the ID of the related PartyDetailsDefinitionRequest message which will logically be tied to this message" offset="0" semanticType="int"/>
-        <field name="SecurityReqID" id="320" type="uInt64" description="Unique identifier for a security definition request. It is incumbent on the market participant to maintain uniqueness" offset="8" semanticType="int"/>
-        <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the message was initially received manually (as opposed to electronically)" offset="16" semanticType="int"/>
+        <field name="OrderID" id="37" type="uInt64" description="Order ID of the problem execution" offset="8" semanticType="int"/>
+        <field name="ExecAckStatus" id="1036" type="ExecAckStatus" description="Indicates the status of the execution acknowledgement" offset="16" semanticType="int"/>
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="17" semanticType="int"/>
-        <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="21" semanticType="String"/>
-        <field name="SecurityReqType" id="321" type="SecurityReqType" description="Type of Security Definition Request. Constant value" semanticType="char"/>
-        <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="41" semanticType="int"/>
-        <field name="SecuritySubType" id="762" type="String8Req" description="Identifies specific type of UDS; valid values are COMBO, COVERED and REPO" offset="49" semanticType="String"/>
-        <field name="Location" id="9537" type="String5Req" description="Text describing sender's location (i.e. geopraphic location and/or desk)" offset="57" semanticType="String"/>
-        <field name="StartDate" id="916" type="LocalMktDate" description="Start date of a financing deal, i.e. the date the buyer pays the seller cash and takes control of the collateral" offset="62" semanticType="LocalMktDate"/>
-        <field name="EndDate" id="917" type="LocalMktDate" description="End date of a financing deal, i.e. the date the seller reimburses the buyer and takes back control of the collateral" offset="64" semanticType="LocalMktDate"/>
-        <field name="MaturityDate" id="541" type="LocalMktDate" description="The expiration date of the series to use for the TM template" offset="66" semanticType="LocalMktDate"/>
-        <field name="MaxNoOfSubstitutions" id="37715" type="uInt8NULL" description="Max number of substitutions allowed. The value of 0 indicates that substitutions are not allowed." offset="68" semanticType="int"/>
-        <field name="MoneyOrPar" id="37714" type="MoneyOrPar" description="Money or par tells if the GC is filled by par amount OR by money amount.   1= Money filled 2 = Par filled 0 = Not Available" offset="69" semanticType="int"/>
-        <group name="NoLegs" id="555" description="Up to 26 legs (i.e., repeating groups) supported for UDS for options. Up to 40 legs (i.e., repeating groups) supported for UDS for futures" blockLength="19" dimensionType="groupSize">
-            <field name="LegSecurityIDSource" id="603" type="LegSecIDSource" description="Identifies source of tag 602-LegSecurityID value. Constant value" semanticType="char"/>
-            <field name="LegPrice" id="566" type="PRICENULL9" description="Price of the futures contract as part of UDS Covered " offset="0" semanticType="Price"/>
-            <field name="LegSecurityID" id="602" type="Int32" description="ISIN code, this is the primary tag used to identify the contract and it must be populated with the corresponding tag 48-SecurityID value from the market data 35=d Security Definition message." offset="8" semanticType="int"/>
-            <field name="LegOptionDelta" id="1017" type="Decimal32NULL" description="Delta used to calculate the quantity of futures used to cover the option or option strategy." offset="12" semanticType="float"/>
-            <field name="LegSide" id="624" type="SideReq" description="The side of the leg for this repeating group." offset="17" semanticType="int"/>
-            <field name="LegRatioQty" id="623" type="uInt8NULL" description="Specifies ratio for the instrument defined in this repeating group. Required for any UDS options leg. Optional for Covereds leg" offset="18" semanticType="int"/>
-        </group>
-        <group name="NoUnderlyings" id="711" description="Number of underlying legs that make up the security." blockLength="13" dimensionType="groupSize">
-            <field name="UnderlyingSecurityAltID" id="458" type="String12Req" description="Alternate Security identifier value for this underlying security of UnderlyingSecurityAltIDSource (459) type (e.g. CUSIP, SEDOL, ISIN, etc). Requires UnderlyingSecurityAltIDSource. For REPO security type will contain underlying CUSIP or ISIN. For GC REPO will contain a synthetic CUSIP or ISIN representing a basket rule" offset="0" semanticType="String"/>
-            <field name="UnderlyingSecurityAltIDSource" id="459" type="SecurityAltIDSource" description="Identifies class or source of the UnderlyingSecurityAltID (458) value" offset="12" semanticType="int"/>
-        </group>
-    </ns2:message>
-    <ns2:message name="SecurityDefinitionResponse542" id="542" description="SecurityDefinitionResponse" blockLength="419" semanticType="d">
-        <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
-        <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
-        <field name="Text" id="58" type="String256" description="Reject reason details. Will be used only for descriptive rejects" offset="12" semanticType="String"/>
-        <field name="FinancialInstrumentFullName" id="2714" type="StringLength35" description="Long name of the instrument for TM Repo" offset="268" semanticType="String"/>
-        <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="303" semanticType="String"/>
-        <field name="Symbol" id="55" type="String20" description="Instrument Short Name for TM Repo " offset="323" semanticType="String"/>
-        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="Refers to the ID of the related PartyDetailsDefinitionRequest message which will logically be tied to this message" offset="343" semanticType="int"/>
-        <field name="SecurityReqID" id="320" type="uInt64" description="Unique identifier for a security definition request" offset="351" semanticType="int"/>
-        <field name="SecurityResponseID" id="322" type="uInt64" description="Unique ID of a SecurityDefinition message" offset="359" semanticType="int"/>
-        <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="367" semanticType="int"/>
-        <field name="SecurityGroup" id="1151" type="StringLength6" description="Instrument group code" offset="375" semanticType="String"/>
-        <field name="SecurityType" id="167" type="StringLength6" description="Indicates type of security" offset="381" semanticType="String"/>
-        <field name="Location" id="9537" type="String5Req" description="Text describing sender's location (i.e. geopraphic location and/or desk)" offset="387" semanticType="String"/>
-        <field name="SecurityID" id="48" type="Int32" description="Identifier of the UDS/UDI" offset="392" semanticType="int"/>
-        <field name="Currency" id="15" type="String3" description="Identifies currency used for price" offset="396" semanticType="String"/>
-        <field name="SecurityIDSource" id="22" type="SecurityIDSource" description="Identifies class or source of the SecurityID (Tag 48) value. Constant value" semanticType="char"/>
-        <field name="MaturityMonthYear" id="200" type="MaturityMonthYear" description="Instrument expiration; earliest leg maturity in the options strategy" offset="399" semanticType="MonthYear"/>
-        <field name="DelayDuration" id="5904" type="uInt16NULL" description="Indicates the amount of time that a message was delayed as a result of being split (9553=0) or as a result of being queued behind a split message (9553=1). Represented as number of nanoseconds in unix epoch format (since Jan 1, 1970). Subtracting this number from FIFO time will represent original received time of delayed message" offset="404" semanticType="int"/>
-        <field name="MaturityDate" id="541" type="LocalMktDate" description="The expiration date of the series to use for the TM template" offset="406" semanticType="LocalMktDate"/>
-        <field name="StartDate" id="916" type="LocalMktDate" description="Start date of a financing deal, i.e. the date the buyer pays the seller cash and takes control of the collateral" offset="408" semanticType="LocalMktDate"/>
-        <field name="EndDate" id="917" type="LocalMktDate" description="End date of a financing deal, i.e. the date the seller reimburses the buyer and takes back control of the collateral" offset="410" semanticType="LocalMktDate"/>
-        <field name="SecurityResponseType" id="323" type="SecRspTyp" description="Type of security definition message response. " offset="412" semanticType="int"/>
-        <field name="UserDefinedInstrument" id="9779" type="UDI" description="Identifies user-defined instruments. Constant value" semanticType="char"/>
-        <field name="ExpirationCycle" id="827" type="ExpCycle" description="For tag 827-ExpirationCycle=2, instrument expires as indicated in market data Security Definition (tag 35-MsgType=d) repeating block:  Tag 865-EventType=7 (Last Eligible Trade Date) Tag 1145-EventTime" offset="413" semanticType="int"/>
-        <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the message was initially received manually (as opposed to electronically) " offset="414" semanticType="int"/>
-        <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="415" semanticType="int"/>
-        <field name="AutoQuoteRequest" id="9776" type="BooleanFlag" description="Boolean flag (0/1) to automatically send a quote request message following the security definition (35=d) message." offset="416" semanticType="int"/>
-        <field name="MaxNoOfSubstitutions" id="37715" type="uInt8NULL" description="Max number of substitutions allowed. The value of 0 indicates that substitutions are not allowed." offset="417" semanticType="int"/>
-        <field name="MoneyOrPar" id="37714" type="MoneyOrPar" description="Money or par tells if the GC is filled by par amount OR by money amount.   1= Money filled 2 = Par filled 0 = n/a " offset="418" semanticType="int"/>
-        <group name="NoLegs" id="555" description="Number of legs (repeating groups)." blockLength="19" dimensionType="groupSize">
-            <field name="LegPrice" id="566" type="PRICENULL9" description="Price of the futures contract as part of UDS Covered " offset="0" semanticType="Price"/>
-            <field name="LegOptionDelta" id="1017" type="Decimal32NULL" description="Delta used to calculate the quantity of futures used to cover the option or option strategy." offset="8" semanticType="float"/>
-            <field name="LegSecurityIDSource" id="603" type="LegSecIDSource" description="Identifies source of tag 602-LegSecurityID value. Constant value" semanticType="char"/>
-            <field name="LegSecurityID" id="602" type="Int32" description="Unique instrument ID for the leg." offset="13" semanticType="int"/>
-            <field name="LegSide" id="624" type="SideReq" description="For Covereds, must be present for option repeating group and must = 1 (buy). For Covereds, must be present for future repeating group as well. For Combos, the first instrument in the repeating group must = 1 (buy). All UDS contract are defined from the buy side perspective (i.e. buying the spread)." offset="17" semanticType="int"/>
-            <field name="LegRatioQty" id="623" type="uInt8NULL" description="Specifies ratio for the instrument defined in this repeating group. Required for any UDS options leg. Optional for Covereds leg" offset="18" semanticType="int"/>
-        </group>
-        <group name="NoUnderlyings" id="711" description="Number of underlying legs that make up the security." blockLength="13" dimensionType="groupSize">
-            <field name="UnderlyingSecurityAltID" id="458" type="String12" description="Alternate Security identifier value for this underlying security of UnderlyingSecurityAltIDSource (459) type (e.g. CUSIP, SEDOL, ISIN, etc). Requires UnderlyingSecurityAltIDSource. For REPO security type will contain underlying CUSIP or ISIN. For GC REPO will contain a synthetic CUSIP or ISIN representing a basket rule" offset="0" semanticType="String"/>
-            <field name="UnderlyingSecurityAltIDSource" id="459" type="SecurityAltIDSource" description="Identifies class or source of the UnderlyingSecurityAltID (458) value" offset="12" semanticType="int"/>
-        </group>
+        <field name="ClOrdID" id="11" type="String20Req" description="CIOrdID of the problem execution" offset="21" semanticType="String"/>
+        <field name="SecExecID" id="527" type="uInt64" description="The SecondaryExecID of the Execution Report being acknowledged" offset="41" semanticType="int"/>
+        <field name="LastPx" id="31" type="PRICE9" description="Price of this fill" offset="49" semanticType="Price"/>
+        <field name="SecurityID" id="48" type="Int32" description="Security ID as defined by CME. For the security ID list, see the security definition messages." offset="57" semanticType="int"/>
+        <field name="LastQty" id="32" type="uInt32" description="Quantity of shares bought/sold on this fill" offset="61" semanticType="int"/>
+        <field name="DKReason" id="127" type="DKReason" description="Reason for execution rejection" offset="65" semanticType="char"/>
+        <field name="Side" id="54" type="SideReq" description="Order side" offset="66" semanticType="int"/>
     </ns2:message>
     <ns2:message name="RequestForQuote543" id="543" description="RequestForQuote" blockLength="55" semanticType="R">
         <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="Refers to the ID of the related PartyDetailsDefinitionRequest message which will logically be tied to this message" offset="0" semanticType="int"/>
@@ -1288,7 +1246,7 @@
             <field name="SideTimeInForce" id="962" type="SideTimeInForce" description="Indicates how long the order as specified in the side stays in effect. SideTimeInForce allows a two-sided cross order to specify order behavior separately for each side. Defaults to Day if absent." offset="33" semanticType="int"/>
         </group>
     </ns2:message>
-    <ns2:message name="MassQuoteAck545" id="545" description="MassQuoteAck" blockLength="341" semanticType="b">
+    <ns2:message name="MassQuoteAck545" id="545" description="MassQuoteAck" blockLength="342" semanticType="b">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
         <field name="Text" id="58" type="String256" description="Reject reason details. Will be used only for descriptive rejects" offset="12" semanticType="String"/>
@@ -1304,11 +1262,12 @@
         <field name="QuoteStatus" id="297" type="QuoteAckStatus" description="Identifies the status of the quote acknowledgement." offset="333" semanticType="int"/>
         <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the message was initially received manually (as opposed to electronically)" offset="334" semanticType="int"/>
         <field name="NoProcessedEntries" id="9772" type="uInt8" description="Number of quotes that have been accepted from the corresponding inbound message" offset="335" semanticType="int"/>
-        <field name="MMProtectionReset" id="9773" type="BooleanFlag" description="When market maker protection is triggered ?? Falcon will not accept any new quotes from the market maker for that product group until it receives a mass quote message with the MMProtectionReset flag set to ??Y??." offset="336" semanticType="int"/>
+        <field name="MMProtectionReset" id="9773" type="BooleanFlag" description="When market maker protection is triggered ¿ Falcon will not accept any new quotes from the market maker for that product group until it receives a mass quote message with the MMProtectionReset flag set to ¿Y¿." offset="336" semanticType="int"/>
         <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="337" semanticType="int"/>
         <field name="LiquidityFlag" id="9373" type="BooleanNULL" description="Represents the market making MiFID obligation reporting" offset="338" semanticType="int"/>
         <field name="ShortSaleType" id="5409" type="ShortSaleType" description="Indicates the type of short sale. Will not be used for Buy orders but Sell orders should have this tag populated for MiFID" offset="339" semanticType="int"/>
-        <field name="TotNoQuoteEntries" id="304" type="uInt8NULL" description="Total number of quotes for the quote set across all messages. Should be the sum of all NoQuoteEntries in each message that has repeating quotes that are part of the same quote set. Required if NoQuoteEntries &gt; 0. Since fragmentation is not supported ?? in practice this will always be equal to the value of NoQuoteEntries." offset="340" semanticType="int"/>
+        <field name="TotNoQuoteEntries" id="304" type="uInt8NULL" description="Total number of quotes for the quote set across all messages. Should be the sum of all NoQuoteEntries in each message that has repeating quotes that are part of the same quote set. Required if NoQuoteEntries &gt; 0. Since fragmentation is not supported ¿ in practice this will always be equal to the value of NoQuoteEntries." offset="340" semanticType="int"/>
+        <field name="PossRetransFlag" id="9765" type="BooleanFlag" description="Flags message as possible retransmission. This will convey whether a message is an original transmission or duplicate in response to RetransmissionRequest. This will become pertinent when original messages get interleaved with Retransmission responses" offset="341" sinceVersion="2" semanticType="int"/>
         <group name="NoQuoteEntries" id="295" description="The number of quoute entries for a quote set." blockLength="11" dimensionType="groupSize">
             <field name="QuoteEntryID" id="299" type="uInt32" description="Unique identifier for a quote. The QuoteEntryID stays with the quote as a static identifier even if the quote is updated. For fills this value is transposed into client order ID (tag 11)" offset="0" semanticType="int"/>
             <field name="SecurityID" id="48" type="Int32" description="Unique instrument ID " offset="4" semanticType="int"/>
@@ -1316,7 +1275,7 @@
             <field name="QuoteEntryRejectReason" id="368" type="uInt8" description="Reason (error code) quote has been rejected" offset="10" semanticType="int"/>
         </group>
     </ns2:message>
-    <ns2:message name="RequestForQuoteAck546" id="546" description="RequestForQuoteAck" blockLength="349" semanticType="b">
+    <ns2:message name="RequestForQuoteAck546" id="546" description="RequestForQuoteAck" blockLength="350" semanticType="b">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
         <field name="Text" id="58" type="String256" description="Reject reason details. Will be used only for descriptive rejects" offset="12" semanticType="String"/>
@@ -1332,8 +1291,9 @@
         <field name="QuoteStatus" id="297" type="QuoteAckStatus" description="Identifies the status of the quote acknowledgement." offset="346" semanticType="int"/>
         <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the message was initially received manually (as opposed to electronically) " offset="347" semanticType="int"/>
         <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="348" semanticType="int"/>
+        <field name="PossRetransFlag" id="9765" type="BooleanFlag" description="Flags message as possible retransmission. This will convey whether a message is an original transmission or duplicate in response to RetransmissionRequest. This will become pertinent when original messages get interleaved with Retransmission responses" offset="349" sinceVersion="2" semanticType="int"/>
     </ns2:message>
-    <ns2:message name="QuoteCancelAck547" id="547" description="QuoteCancelAck" blockLength="339" semanticType="b">
+    <ns2:message name="QuoteCancelAck547" id="547" description="QuoteCancelAck" blockLength="340" semanticType="b">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
         <field name="Text" id="58" type="String256" description="Reject reason details. Will be used only for descriptive rejects" offset="12" semanticType="String"/>
@@ -1354,6 +1314,7 @@
         <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="336" semanticType="int"/>
         <field name="TotNoQuoteEntries" id="304" type="uInt8NULL" description="Total number of quotes for the quote set across all messages. Will be populated only for enumerated rejects for Cancel By Instrument" offset="337" semanticType="int"/>
         <field name="LiquidityFlag" id="9373" type="BooleanNULL" description="Represents the market making MiFID obligation reporting" offset="338" semanticType="int"/>
+        <field name="PossRetransFlag" id="9765" type="BooleanFlag" description="Flags message as possible retransmission. This will convey whether a message is an original transmission or duplicate in response to RetransmissionRequest. This will become pertinent when original messages get interleaved with Retransmission responses" offset="339" sinceVersion="2" semanticType="int"/>
         <group name="NoQuoteEntries" id="295" description="The number of quote entries for a quote set. Will be populated only for enumerated rejects for Cancel By Instrument" blockLength="9" dimensionType="groupSize">
             <field name="QuoteEntryID" id="299" type="uInt32" description="Unique identifier for a quote. The QuoteEntryID stays with the quote as a static identifier even if the quote is updated. For fills this value is transposed into client order ID (tag 11)" offset="0" semanticType="int"/>
             <field name="SecurityID" id="48" type="Int32" description="Security ID as defined by CME. For the security ID list, see the security definition messages" offset="4" semanticType="int"/>
@@ -1429,7 +1390,7 @@
         <field name="OrigSideTradeID" id="1507" type="uInt32NULL" description="Refers back to the unique ID assigned to the original trade being corrected" offset="169" semanticType="int"/>
         <field name="TradeDate" id="75" type="LocalMktDate" description="Indicates date of trading day (expressed in local time at place of trade)." offset="173" semanticType="LocalMktDate"/>
         <field name="OrdStatus" id="39" type="OrdStatusTrdCxl" description="Identifies status of order as trade cancellation or correction" offset="175" semanticType="char"/>
-        <field name="ExecType" id="150" type="ExecTypTrdCxl" description="Describes the action that triggered this specific Execution Report ?? see the OrdStatus (39) tag for the current order status (e.g.,Partially Filled)." offset="176" semanticType="char"/>
+        <field name="ExecType" id="150" type="ExecTypTrdCxl" description="Describes the action that triggered this specific Execution Report ¿ see the OrdStatus (39) tag for the current order status (e.g.,Partially Filled)." offset="176" semanticType="char"/>
         <field name="OrdType" id="40" type="OrderType" description="Order type." offset="177" semanticType="char"/>
         <field name="Side" id="54" type="SideReq" description="Order side" offset="178" semanticType="int"/>
         <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if order was sent manually or generated by automated trading logic" offset="179" semanticType="int"/>
@@ -1503,7 +1464,7 @@
             <field name="OrderEventReason" id="1798" type="uInt8" description="Action that caused the event to ocurr" offset="22" semanticType="int"/>
         </group>
     </ns2:message>
-    <ns2:message name="OrderMassActionReport558" id="558" description="OrderMassActionReport" blockLength="102" semanticType="BZ">
+    <ns2:message name="OrderMassActionReport558" id="558" description="OrderMassActionReport" blockLength="103" semanticType="BZ">
         <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
         <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
         <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="12" semanticType="String"/>
@@ -1530,10 +1491,74 @@
         <field name="TimeInForce" id="59" type="MassCancelTIF" description="If provided then only orders with this qualifier will be cancelled. If absent then all Day &amp; GT orders will be cancelled" offset="99" semanticType="int"/>
         <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="100" semanticType="int"/>
         <field name="LiquidityFlag" id="9373" type="BooleanNULL" description="Represents the market making MiFID obligation reporting" offset="101" semanticType="int"/>
+        <field name="PossRetransFlag" id="9765" type="BooleanFlag" description="Flags message as possible retransmission. This will convey whether a message is an original transmission or duplicate in response to RetransmissionRequest. This will become pertinent when original messages get interleaved with Retransmission responses" offset="102" sinceVersion="2" semanticType="int"/>
         <group name="NoAffectedOrders" id="534" description="Total number of order identifiers affected by the OrderMass Action Request. Only used if orders could actually be cancelled otherwise will be set to zero. Must be followed by OrigCIOrdID" blockLength="32" dimensionType="groupSize">
             <field name="OrigCIOrdID" id="41" type="String20Req" description="Contains the ClOrd of the cancelled order" offset="0" semanticType="String"/>
             <field name="AffectedOrderID" id="535" type="uInt64" description="Order ID of an order cancelled by a mass action request." offset="20" semanticType="int"/>
             <field name="CxlQuantity" id="84" type="uInt32" description="Total quantity cancelled for this order." offset="28" semanticType="int"/>
+        </group>
+    </ns2:message>
+    <ns2:message name="SecurityDefinitionRequest560" id="560" description="SecurityDefinitionRequest" blockLength="71" semanticType="c" sinceVersion="2">
+        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="Refers to the ID of the related PartyDetailsDefinitionRequest message which will logically be tied to this message" offset="0" semanticType="int"/>
+        <field name="SecurityReqID" id="320" type="uInt64" description="Unique identifier for a security definition request. It is incumbent on the market participant to maintain uniqueness" offset="8" semanticType="int"/>
+        <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the order was initially received manually (as opposed to electronically)" offset="16" semanticType="int"/>
+        <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="17" semanticType="int"/>
+        <field name="SenderID" id="5392" type="String20" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="21" semanticType="String"/>
+        <field name="SecurityReqType" id="321" type="SecurityReqType" description="Type of Security Definition Request. Constant value" semanticType="char"/>
+        <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="41" semanticType="int"/>
+        <field name="SecuritySubType" id="762" type="String8Req" description="Identifies specific type of UDS; valid values are COMBO, COVERED and REPO" offset="49" semanticType="String"/>
+        <field name="Location" id="9537" type="String5Req" description="Text describing sender's location (i.e. geopraphic location and/or desk)" offset="57" semanticType="String"/>
+        <field name="StartDate" id="916" type="LocalMktDate" description="Start date of a financing deal, i.e. the date the buyer pays the seller cash and takes control of the collateral" offset="62" semanticType="LocalMktDate"/>
+        <field name="EndDate" id="917" type="LocalMktDate" description="End date of a financing deal, i.e. the date the seller reimburses the buyer and takes back control of the collateral" offset="64" semanticType="LocalMktDate"/>
+        <field name="MaxNoOfSubstitutions" id="37715" type="uInt8NULL" description="Max number of substitutions allowed. The value of 0 indicates that substitutions are not allowed." offset="66" semanticType="int"/>
+        <field name="SourceRepoID" id="5677" type="Int32NULL" description="Represents the source repo instrument on which the new tailor made repo should be modeled on" offset="67" semanticType="int"/>
+        <group name="NoLegs" id="555" description="Up to 26 legs (i.e., repeating groups) supported for UDS for options. Up to 40 legs (i.e., repeating groups) supported for UDS for futures. Will be set to 0 for REPO" blockLength="19" dimensionType="groupSize">
+            <field name="LegSecurityIDSource" id="603" type="LegSecIDSource" description="Identifies source of tag 602-LegSecurityID value. Constant value" semanticType="char"/>
+            <field name="LegPrice" id="566" type="PRICENULL9" description="Price of the futures contract as part of UDS Covered " offset="0" semanticType="Price"/>
+            <field name="LegSecurityID" id="602" type="Int32" description="ISIN code, this is the primary tag used to identify the contract and it must be populated with the corresponding tag 48-SecurityID value from the market data 35=d Security Definition message." offset="8" semanticType="int"/>
+            <field name="LegOptionDelta" id="1017" type="Decimal32NULL" description="Delta used to calculate the quantity of futures used to cover the option or option strategy." offset="12" semanticType="float"/>
+            <field name="LegSide" id="624" type="SideReq" description="The side of the leg for this repeating group." offset="17" semanticType="int"/>
+            <field name="LegRatioQty" id="623" type="uInt8NULL" description="Specifies ratio for the instrument defined in this repeating group. Required for any UDS options leg. Optional for Covereds leg" offset="18" semanticType="int"/>
+        </group>
+    </ns2:message>
+    <ns2:message name="SecurityDefinitionResponse561" id="561" description="SecurityDefinitionResponse" blockLength="429" semanticType="d" sinceVersion="2">
+        <field name="SeqNum" id="9726" type="uInt32" description="Sequence number as assigned to message" offset="0" semanticType="int"/>
+        <field name="UUID" id="39001" type="uInt64" description="Matches Establish.UUID used to establish the connection" offset="4" semanticType="int"/>
+        <field name="Text" id="58" type="String256" description="Reject reason details. Will be used only for descriptive rejects" offset="12" semanticType="String"/>
+        <field name="FinancialInstrumentFullName" id="2714" type="StringLength35" description="Long name of the instrument for TM Repo" offset="268" semanticType="String"/>
+        <field name="SenderID" id="5392" type="String20Req" description="Operator ID. Should be unique per Firm ID. Assigned value used to identify specific message originator. Represents last individual or team in charge of the system which modifies the order before submission to the Globex platform, or if not modified from initiator (party role=118), last individual or team in charge of the system, which submit the order to the Globex platform" offset="303" semanticType="String"/>
+        <field name="Symbol" id="55" type="String20" description="Instrument Short Name for TM Repo " offset="323" semanticType="String"/>
+        <field name="PartyDetailsListReqID" id="1505" type="uInt64" description="Refers to the ID of the related PartyDetailsDefinitionRequest message which will logically be tied to this message" offset="343" semanticType="int"/>
+        <field name="SecurityReqID" id="320" type="uInt64" description="Unique identifier for a security definition request" offset="351" semanticType="int"/>
+        <field name="SecurityResponseID" id="322" type="uInt64" description="Unique ID of a SecurityDefinition message" offset="359" semanticType="int"/>
+        <field name="SendingTimeEpoch" id="5297" type="uInt64" description="Time when the message is sent. 64-bit integer expressing the number of nano seconds since midnight January 1, 1970." offset="367" semanticType="int"/>
+        <field name="SecurityGroup" id="1151" type="StringLength6" description="Security Group Code.  This tag was previously used as Product Code. An exchange specific code assigned to a group of related securities, which are concurrently affected by market events. " offset="375" semanticType="String"/>
+        <field name="SecurityType" id="167" type="StringLength6" description="Indicates type of security" offset="381" semanticType="String"/>
+        <field name="Location" id="9537" type="String5Req" description="Text describing sender's location (i.e. geopraphic location and/or desk)" offset="387" semanticType="String"/>
+        <field name="SecurityID" id="48" type="Int32NULL" description="Unique instrument ID " offset="392" semanticType="int"/>
+        <field name="Currency" id="15" type="String3" description="Identifies the currency for the price" offset="396" semanticType="String"/>
+        <field name="SecurityIDSource" id="22" type="SecurityIDSource" description="Identifies class or source of the SecurityID (Tag 48) value. Constant value" semanticType="char"/>
+        <field name="MaturityMonthYear" id="200" type="MaturityMonthYear" description="Instrument expiration; earliest leg maturity in the options strategy " offset="399" semanticType="MonthYear"/>
+        <field name="DelayDuration" id="5904" type="uInt16NULL" description="Indicates the amount of time that a message was delayed as a result of being split (9553=0) or as a result of being queued behind a split message (9553=1). Represented as number of nanoseconds in unix epoch format (since Jan 1, 1970). Subtracting this number from FIFO time will represent original received time of delayed message" offset="404" semanticType="int"/>
+        <field name="StartDate" id="916" type="LocalMktDate" description="Start date of a financing deal, i.e. the date the buyer pays the seller cash and takes control of the collateral" offset="406" semanticType="LocalMktDate"/>
+        <field name="EndDate" id="917" type="LocalMktDate" description="nd date of a financing deal, i.e. the date the seller reimburses the buyer and takes back control of the collateral" offset="408" semanticType="LocalMktDate"/>
+        <field name="MaxNoOfSubstitutions" id="37715" type="uInt8NULL" description="Max number of substitutions allowed. The value of 0 indicates that substitutions are not allowed." offset="410" semanticType="int"/>
+        <field name="SourceRepoID" id="5677" type="Int32NULL" description="Represents the source repo instrument on which the new tailor made repo should be modeled on" offset="411" semanticType="int"/>
+        <field name="TerminationType" id="788" type="String8" description="Represents the term code" offset="415" semanticType="String"/>
+        <field name="SecurityResponseType" id="323" type="SecRspTyp" description="Type of security definition message response. " offset="423" semanticType="int"/>
+        <field name="UserDefinedInstrument" id="9779" type="UDI" description="Identifies user-defined instruments. Constant value" semanticType="char"/>
+        <field name="ExpirationCycle" id="827" type="ExpCycle" description="For tag 827-ExpirationCycle=2, instrument expires as indicated in market data Security Definition (tag 35-MsgType=d) repeating block:  Tag 865-EventType=7 (Last Eligible Trade Date) Tag 1145-EventTime" offset="424" semanticType="int"/>
+        <field name="ManualOrderIndicator" id="1028" type="ManualOrdIndReq" description="Indicates if the order was initially received manually (as opposed to electronically)" offset="425" semanticType="int"/>
+        <field name="SplitMsg" id="9553" type="SplitMsg" description="Indicates whether a message was delayed as a result of being split among multiple packets (0) or if a message was delayed as a result of TCP re-transmission (1) or if a complete message was delayed due to a previously submitted split or out of order message (2). If absent then the message was not delayed and was neither split nor received out of order" offset="426" semanticType="int"/>
+        <field name="AutoQuoteRequest" id="9776" type="BooleanFlag" description="Boolean flag (0/1) to automatically send a quote request message following the security definition (35=d) message." offset="427" semanticType="int"/>
+        <field name="PossRetransFlag" id="9765" type="BooleanFlag" description="Flags message as possible retransmission. This will convey whether a message is an original transmission or duplicate in response to RetransmissionRequest. This will become pertinent when original messages get interleaved with Retransmission responses" offset="428" semanticType="int"/>
+        <group name="NoLegs" id="555" description="Number of legs (repeating groups)." blockLength="19" dimensionType="groupSize">
+            <field name="LegPrice" id="566" type="PRICENULL9" description="Price for a futures leg of a covered " offset="0" semanticType="Price"/>
+            <field name="LegOptionDelta" id="1017" type="Decimal32NULL" description="Delta used to calculate the quantity of futures used to cover the option or option strategy.For a covered option outright instrument, must be between +0.01 and +1.00. For a covered option spread instrument, must be between +0.01 and +40.00" offset="8" semanticType="float"/>
+            <field name="LegSecurityIDSource" id="603" type="LegSecIDSource" description="Identifies class or source of the tag 602-LegSecurityID value. Constant value" semanticType="char"/>
+            <field name="LegSecurityID" id="602" type="Int32" description="Unique instrument ID for the leg." offset="13" semanticType="int"/>
+            <field name="LegSide" id="624" type="SideReq" description="For Covereds, must be present for option repeating group and must = 1 (buy). For Covereds, must be present for future repeating group as well. For Combos, the first instrument in the repeating group must = 1 (buy). All UDS contract are defined from the buy side perspective (i.e. buying the spread)." offset="17" semanticType="int"/>
+            <field name="LegRatioQty" id="623" type="uInt8NULL" description="Specifies ratio for the instrument defined in this repeating group. Required for any UDS options leg. Optional for Covereds leg" offset="18" semanticType="int"/>
         </group>
     </ns2:message>
 </ns2:messageSchema>
