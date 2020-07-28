@@ -1,9 +1,7 @@
 ## Omi Protocol Reference
 
-Repository of protocol specifications
+Specifications are stored here as a standardized document library and for historical purposes. Exchanges and/or organizations often remove inactive protocols when they update their online documentation.
 
-Specifications are mirrored here for historical purposes.  The original links change often.as exchanges and/or organizations update their websites.
+All documentation in this directory has been collected from publicly available sources.
 
-All information has been collected from publicly available websites.
-
-If any information is in violation of copyright please let us know and we will remove it.
+If any information is in violation of copyright, please communicate through official channels and we will remove it.
