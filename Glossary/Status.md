@@ -1,9 +1,8 @@
-## Status
+## Protocol Deployment Status
 
-Verified: Protocol has been tested on live data
+Active: Active (in use) production protocol
 
-Beta: Protocol has been tested on live data but contains known issues
+Depracated: Protocol is no longer in active use, may be used on historical data
 
-Untested: Protocol has not been tested due to lack of data
+Future: Protocol spec has been released, but protocol in bt in an active production environment
 
-Note: Untested Protocols with similar verified protocols are likely to work
