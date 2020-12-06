@@ -1,7 +1,5 @@
 ## Omi Protocol Reference
 
-Specifications are stored here as a standardized document library and for historical purposes. Exchanges and/or organizations often remove inactive protocols when they update their online documentation.
+This repository organizes protocol specifications into a standardized library.  
 
-All documentation in this directory has been collected from publicly available sources.
-
-If any information is in violation of copyright, please communicate through official channels and we will remove it.
+All documentation in this directory has been collected from publicly available sources.  Additionally, these documents preserve the historical record as organizations often remove inactive protocols.  If any information is in violation of copyright, please communicate through official channels and The Open Markets Initiative will remove it.
