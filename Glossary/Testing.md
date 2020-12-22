@@ -1,9 +1,15 @@
-## Status
+## Testing (Status)
 
 Verified: Protocol has been tested on live data
 
-Beta: Protocol has been tested on live data but contains known issues
+Incomplete: Protocol has been tested on live data but contains known issues
 
-Untested: Protocol has not been tested due to lack of data
+Untested: Protocol has not been tested but is likely to work 
 
-Note: Untested Protocols with similar verified protocols are likely to work
+Beta: Protocol has not been tested and will likely contain issues
+
+### Notes
+
+Untested protocols that are similar verified protocols are likely to work
+
+Beta protocols are transcribed from specification documentation but have not been tested 
