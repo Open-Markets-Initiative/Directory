@@ -8,8 +8,8 @@
 
 **Beta:** Protocol has not been tested and will likely contain issues
 
-### Notes
+### Notes:
 
-Untested protocols are similar to another verified protocol and are considered likely to work
+**Untested** protocols are similar to another verified protocol and are considered likely to work
 
-Beta protocols are transcribed from specification documentation but have not been tested 
+**Beta** protocols are transcribed from specification documentation but have not been tested 
