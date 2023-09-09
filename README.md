@@ -1,6 +1,6 @@
 ## Open Markets Initiative Directory
 
-Doucuments and information related to the The Open Markets Initiative.
+Documents and information related to the The Open Markets Initiative.
 
 For source code please check out the projects directory: [Projects](https://github.com/Open-Markets-Initiative/Directory/tree/master/Projects "Omi Github Projects")
 
