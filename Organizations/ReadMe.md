@@ -1,0 +1,4 @@
+Omi Organizations
+This directory contains documents, specifications and images used by the Open Markets Initiative.
+
+All documentation in this directory has been collected from publicly available sources. Additionally, these documents preserve the historical record as organizations often remove inactive protocols. If any information is in violation of copyright, please communicate through official channels and The Open Markets Initiative will remove it.
