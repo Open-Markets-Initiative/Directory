@@ -1,3 +1,3 @@
-## Eurex Exchange
+## The Members Exchange (MEMX)
 
-Eurex Exchange is an international exchange which primarily offers trading in European based derivatives. It is the largest European futures and options market. 
+The Members Exchange is an independently owned, technology-driven stock exchange founded by members to serve the interest of its founders and their collective client base. The founding members, which include nine major financial organizations, claim they seek to transform markets around the goals of transparency, innovation, and competition in order to align exchange services with the interests of market participants.
