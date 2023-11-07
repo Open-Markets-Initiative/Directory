@@ -1,3 +1,5 @@
-## The Members Exchange (MEMX)
+## Omi Organizations
 
-The Members Exchange is an independently owned, technology-driven stock exchange founded by members to serve the interest of its founders and their collective client base. The founding members, which include nine major financial organizations, claim they seek to transform markets around the goals of transparency, innovation, and competition in order to align exchange services with the interests of market participants.
+Repository of definitions and protocol specifications of the oraganizations covered by the Open Markets Inititative.
+
+All documentation in this directory has been collected from publicly available sources. Additionally, these documents preserve the historical record as organizations often remove inactive protocols. If any information is in violation of copyright, please communicate through official channels and The Open Markets Initiative will remove it.
