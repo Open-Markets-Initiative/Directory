@@ -2,11 +2,14 @@
 
 The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
 
-## OMI Philosophy
+## Omi Philosophy
 
-Source code should use best practices including automation and minimization of dependencies.
+Source code should use best practices:
+- Automated build processes
+- Regression testing
+- Clean code and SOLID principles
 
-Patented protocol code generation technologies can be licensed from Omi.
+Source generated repositories are a testing ground for code generation technologies which are under patent review.
 
 Enjoy.
 
