@@ -1,6 +1,4 @@
-## Itch
-
-Integrated Trading Channel Handlers
+## ITCH: Integrated Trading Channel Handlers
 
 Proprietary Binary Protocol developed by Nasdaq and licensed to many exchanges around the world for market data dissemination.
   
